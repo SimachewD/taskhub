@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package taskhub;
+
+option go_package = "github.com/SimachewD/taskhub/proto";
+
+service UserService {
+
+  rpc CreateUser(CreateUserRequest)
+      returns (UserResponse);
+
+  rpc GetUser(GetUserRequest)
+      returns (UserResponse);
+
+}
+
+message CreateUserRequest {
+  string name = 1;
+  string email = 2;
+}
+
+message GetUserRequest {
+  string id = 1;
+}
+
+message UserResponse {
+  string id = 1;
+  string name = 2;
+  string email = 3;
+}
