@@ -1,24 +1,40 @@
 package main
 
 import (
+	"context"
 	"log"
-	"net"
 
-	"google.golang.org/grpc"
+	"github.com/SimachewD/taskhub/internal/cache"
+	"github.com/SimachewD/taskhub/internal/config"
+	"github.com/SimachewD/taskhub/internal/database"
+	"github.com/SimachewD/taskhub/internal/grpc"
+	"github.com/SimachewD/taskhub/internal/repository"
+	"github.com/joho/godotenv"
 )
 
 func main() {
-
-	lis, err := net.Listen("tcp", ":50051")
-	if err != nil {
-		log.Fatal(err)
+	// Load .env file
+	if err := godotenv.Load(); err != nil {
+		log.Println("No .env file found, reading from system environment")
 	}
+	
+	ctx := context.Background()
 
-	server := grpc.NewServer()
+	// 1. Load config (contains DB DSN)
+    cfg := config.Load()
 
-	log.Println("gRPC server running on 50051")
+    // 2. Run migrations
+    err := database.RunMigrations(cfg.PostgresURL)
+    if err != nil {
+        log.Fatalf("failed to run migrations: %v", err)
+    }
 
-	if err := server.Serve(lis); err != nil {
-		log.Fatal(err)
-	}
+    log.Println("migrations ran successfully")
+
+	dbPool := database.NewPostgresPool(ctx, cfg.PostgresURL)
+	redisClient := cache.NewRedisClient(cfg.RedisAddr)
+
+	userRepo := repository.NewUserRepository(dbPool, redisClient)
+
+	grpc.StartServer(":50051", userRepo)
 }
