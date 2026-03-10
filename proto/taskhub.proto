@@ -28,3 +28,38 @@ message UserResponse {
   string name = 2;
   string email = 3;
 }
+
+service TaskService {
+
+  rpc CreateTask(CreateTaskRequest)
+      returns (TaskResponse);
+
+  rpc GetTask(GetTaskRequest)
+      returns (TaskResponse);
+
+  rpc ListTasks(ListTasksRequest)
+      returns (stream TaskResponse);
+}
+
+message CreateTaskRequest {
+  string title = 1;
+  string description = 2;
+  string user_id = 3;
+}
+
+message GetTaskRequest {
+  string id = 1;
+}
+
+message ListTasksRequest {
+  string user_id = 1;
+}
+
+message TaskResponse {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+  string user_id = 4;
+  bool completed = 5;
+  string created_at = 6;
+}

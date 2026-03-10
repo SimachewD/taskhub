@@ -35,6 +35,7 @@ func main() {
 	redisClient := cache.NewRedisClient(cfg.RedisAddr)
 
 	userRepo := repository.NewUserRepository(dbPool, redisClient)
+	taskRepo := repository.NewTaskRepository(dbPool, redisClient)
 
-	grpc.StartServer(":50051", userRepo)
+	grpc.StartServer(":50051", userRepo, taskRepo)
 }
