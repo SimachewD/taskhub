@@ -40,18 +40,30 @@ func (s *GRPCServer) GetTask(ctx context.Context, req *pb.GetTaskRequest) (*pb.T
 	return s.taskRepo.GetTask(ctx, req.Id)
 }
 
-func (s *GRPCServer) ListTasks(req *pb.ListTasksRequest, stream pb.TaskService_ListTasksServer) error {
+func (s *GRPCServer) ListTasks(
+	ctx context.Context,
+	req *pb.ListTasksRequest,
+) (*pb.ListTasksResponse, error) {
 
-	tasks, err := s.taskRepo.ListTasks(stream.Context(), req.UserId)
+	if req.Limit == 0 {
+		req.Limit = 10
+	}
+
+	tasks, nextCursor, err := s.taskRepo.ListTasks(
+		ctx,
+		req.UserId,
+		req.Limit,
+		req.Cursor,
+	)
+
 	if err != nil {
-		return err
+		return nil, err
 	}
 
-	for _, task := range tasks {
-		stream.Send(task)
-	}
-
-	return nil
+	return &pb.ListTasksResponse{
+		Tasks:      tasks,
+		NextCursor: nextCursor,
+	}, nil
 }
 
 func StartServer(port string, userRepo *repository.UserRepository, taskRepo *repository.TaskRepository) {

@@ -37,8 +37,8 @@ service TaskService {
   rpc GetTask(GetTaskRequest)
       returns (TaskResponse);
 
-  rpc ListTasks(ListTasksRequest)
-      returns (stream TaskResponse);
+  rpc ListTasks(ListTasksRequest) 
+      returns (ListTasksResponse);
 }
 
 message CreateTaskRequest {
@@ -51,10 +51,6 @@ message GetTaskRequest {
   string id = 1;
 }
 
-message ListTasksRequest {
-  string user_id = 1;
-}
-
 message TaskResponse {
   string id = 1;
   string title = 2;
@@ -62,4 +58,15 @@ message TaskResponse {
   string user_id = 4;
   bool completed = 5;
   string created_at = 6;
+}
+
+message ListTasksRequest {
+  string user_id = 1;
+  int32 limit = 2;
+  string cursor = 3;
+}
+
+message ListTasksResponse {
+  repeated TaskResponse tasks = 1;
+  string next_cursor = 2;
 }

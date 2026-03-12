@@ -65,6 +65,8 @@ func (r *TaskRepository) GetTask(ctx context.Context, id string) (*pb.TaskRespon
 	}
 
 	task := &pb.TaskResponse{}
+	
+	var createdAt time.Time // temporary variable for DB timestamp
 
 	err = r.db.QueryRow(ctx,
 		`SELECT id,title,description,user_id,completed,created_at
@@ -75,7 +77,7 @@ func (r *TaskRepository) GetTask(ctx context.Context, id string) (*pb.TaskRespon
 			&task.Description,
 			&task.UserId,
 			&task.Completed,
-			&task.CreatedAt,
+			&createdAt, // scan timestamp here
 		)
 
 	if err != nil {
@@ -83,54 +85,74 @@ func (r *TaskRepository) GetTask(ctx context.Context, id string) (*pb.TaskRespon
 		return nil, err
 	}
 
+	// convert time.Time to string
+    task.CreatedAt = createdAt.Format(time.RFC3339)
+
 	data, _ := json.Marshal(task)
 	_ = r.redis.Set(ctx, "task:"+id, data, 5*time.Minute)
 
 	return task, nil
 }
 
-func (r *TaskRepository) ListTasks(ctx context.Context, userID string) ([]*pb.TaskResponse, error) {
+func (r *TaskRepository) ListTasks(
+	ctx context.Context,
+	userID string,
+	limit int32,
+	cursor string,
+) ([]*pb.TaskResponse, string, error) {
 
-	if userID == "" {
-		return nil, fmt.Errorf("User Id is required !")
+	if cursor == "" {
+		cursor = "infinity" //default pointer
+	}
+	if limit <= 0 {
+		limit = 20 // default page size
 	}
 
-	rows, err := r.db.Query(ctx,
-		`SELECT id,title,description,user_id,completed,created_at
-		 FROM tasks WHERE user_id=$1`,
-		userID,
-	)
+	query := `
+	SELECT id, title, description, user_id, completed, created_at
+	FROM tasks
+	WHERE user_id = $1
+		AND created_at < $2::timestamptz
+	ORDER BY created_at DESC
+	LIMIT $3
+	`
+	args := []any{userID, cursor, limit}
 
+	rows, err := r.db.Query(ctx, query, args...)
 	if err != nil {
-		return nil, err
+		return nil, "", err
 	}
 
 	defer rows.Close()
 
 	var tasks []*pb.TaskResponse
+	var lastCursor string
 
 	for rows.Next() {
+
 		task := &pb.TaskResponse{}
 
-		var createdAt time.Time
-
+		var createdAt time.Time // temporary variable for DB timestamp
+		
 		err := rows.Scan(
 			&task.Id,
 			&task.Title,
 			&task.Description,
 			&task.UserId,
 			&task.Completed,
-			&createdAt,
+			&createdAt, // scan timestamp here
 		)
 
 		if err != nil {
-			return nil, err
+			return nil, "", err
 		}
 
-		task.CreatedAt = createdAt.Format(time.RFC3339)
+		// convert time.Time to string
+    	task.CreatedAt = createdAt.Format(time.RFC3339)
+		lastCursor = task.CreatedAt
 
 		tasks = append(tasks, task)
 	}
 
-	return tasks, nil
+	return tasks, lastCursor, nil
 }
