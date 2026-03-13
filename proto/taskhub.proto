@@ -29,22 +29,56 @@ message UserResponse {
   string email = 3;
 }
 
+service AuthService {
+  rpc Register(RegisterRequest) returns (AuthResponse);
+  rpc Login(LoginRequest) returns (AuthResponse);
+}
+
+message RegisterRequest {
+  string name = 1;
+  string email = 2;
+  string password = 3;
+}
+
+message LoginRequest {
+  string email = 1;
+  string password = 2;
+}
+
+message AuthResponse {
+  string token = 1;
+  string user_id = 2;
+}
+
 service TaskService {
 
   rpc CreateTask(CreateTaskRequest)
       returns (TaskResponse);
 
+  rpc UpdateTask(UpdateTaskRequest) 
+      returns (TaskResponse);
+      
   rpc GetTask(GetTaskRequest)
       returns (TaskResponse);
 
   rpc ListTasks(ListTasksRequest) 
       returns (ListTasksResponse);
+
+  rpc DeleteTask(DeleteTaskRequest)
+      returns (DeleteTaskResponse);
 }
 
 message CreateTaskRequest {
   string title = 1;
   string description = 2;
   string user_id = 3;
+}
+
+message UpdateTaskRequest {
+  string id = 1;
+  string title = 2;
+  string description = 3;
+  bool completed = 4;
 }
 
 message GetTaskRequest {
@@ -69,4 +103,12 @@ message ListTasksRequest {
 message ListTasksResponse {
   repeated TaskResponse tasks = 1;
   string next_cursor = 2;
+}
+
+message DeleteTaskRequest {
+  string id = 1;
+}
+
+message DeleteTaskResponse {
+  bool success = 1;
 }

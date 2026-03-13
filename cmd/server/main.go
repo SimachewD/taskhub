@@ -9,6 +9,7 @@ import (
 	"github.com/SimachewD/taskhub/internal/database"
 	"github.com/SimachewD/taskhub/internal/grpc"
 	"github.com/SimachewD/taskhub/internal/repository"
+	"github.com/SimachewD/taskhub/internal/worker"
 	"github.com/joho/godotenv"
 )
 
@@ -36,6 +37,10 @@ func main() {
 
 	userRepo := repository.NewUserRepository(dbPool, redisClient)
 	taskRepo := repository.NewTaskRepository(dbPool, redisClient)
+
+	worker := worker.NewWorker(redisClient)
+
+	go worker.Start(ctx)
 
 	grpc.StartServer(":50051", userRepo, taskRepo)
 }

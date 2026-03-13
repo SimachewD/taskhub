@@ -7,6 +7,7 @@ import (
 	"log"
 	"time"
 
+	"github.com/SimachewD/taskhub/internal/auth"
 	"github.com/SimachewD/taskhub/internal/cache"
 	pb "github.com/SimachewD/taskhub/proto"
 	"github.com/google/uuid"
@@ -20,6 +21,47 @@ type UserRepository struct {
 
 func NewUserRepository(db *pgxpool.Pool, redis *cache.RedisClient) *UserRepository {
 	return &UserRepository{db: db, redis: redis}
+}
+
+func (r *UserRepository) Register(ctx context.Context, name, email, password string) (*pb.AuthResponse, error) {
+	hash, err := auth.HashPassword(password)
+	if err != nil {
+		return nil, err
+	}
+
+	id := uuid.NewString()
+	_, err = r.db.Exec(ctx, `INSERT INTO users(id,name,email,password_hash) VALUES($1,$2,$3,$4)`,
+		id, name, email, hash)
+	if err != nil {
+		return nil, err
+	}
+
+	token, _ := auth.GenerateJWT(id)
+
+	return &pb.AuthResponse{
+		Token:  token,
+		UserId: id,
+	}, nil
+}
+
+func (r *UserRepository) Login(ctx context.Context, email, password string) (*pb.AuthResponse, error) {
+	user := struct {
+		Id       string
+		Password string
+	}{}
+
+	err := r.db.QueryRow(ctx, `SELECT id,password_hash FROM users WHERE email=$1`, email).
+		Scan(&user.Id, &user.Password)
+	if err != nil {
+		return nil, err
+	}
+
+	if !auth.CheckPassword(user.Password, password) {
+		return nil, fmt.Errorf("invalid credentials")
+	}
+
+	token, _ := auth.GenerateJWT(user.Id)
+	return &pb.AuthResponse{Token: token, UserId: user.Id}, nil
 }
 
 func (r *UserRepository) CreateUser(ctx context.Context, user *pb.CreateUserRequest) (*pb.UserResponse, error) {

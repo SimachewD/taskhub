@@ -177,6 +177,170 @@ func (x *UserResponse) GetEmail() string {
 	return ""
 }
 
+type RegisterRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Name          string                 `protobuf:"bytes,1,opt,name=name,proto3" json:"name,omitempty"`
+	Email         string                 `protobuf:"bytes,2,opt,name=email,proto3" json:"email,omitempty"`
+	Password      string                 `protobuf:"bytes,3,opt,name=password,proto3" json:"password,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *RegisterRequest) Reset() {
+	*x = RegisterRequest{}
+	mi := &file_proto_taskhub_proto_msgTypes[3]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *RegisterRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*RegisterRequest) ProtoMessage() {}
+
+func (x *RegisterRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_taskhub_proto_msgTypes[3]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use RegisterRequest.ProtoReflect.Descriptor instead.
+func (*RegisterRequest) Descriptor() ([]byte, []int) {
+	return file_proto_taskhub_proto_rawDescGZIP(), []int{3}
+}
+
+func (x *RegisterRequest) GetName() string {
+	if x != nil {
+		return x.Name
+	}
+	return ""
+}
+
+func (x *RegisterRequest) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
+func (x *RegisterRequest) GetPassword() string {
+	if x != nil {
+		return x.Password
+	}
+	return ""
+}
+
+type LoginRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Email         string                 `protobuf:"bytes,1,opt,name=email,proto3" json:"email,omitempty"`
+	Password      string                 `protobuf:"bytes,2,opt,name=password,proto3" json:"password,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *LoginRequest) Reset() {
+	*x = LoginRequest{}
+	mi := &file_proto_taskhub_proto_msgTypes[4]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *LoginRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*LoginRequest) ProtoMessage() {}
+
+func (x *LoginRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_taskhub_proto_msgTypes[4]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use LoginRequest.ProtoReflect.Descriptor instead.
+func (*LoginRequest) Descriptor() ([]byte, []int) {
+	return file_proto_taskhub_proto_rawDescGZIP(), []int{4}
+}
+
+func (x *LoginRequest) GetEmail() string {
+	if x != nil {
+		return x.Email
+	}
+	return ""
+}
+
+func (x *LoginRequest) GetPassword() string {
+	if x != nil {
+		return x.Password
+	}
+	return ""
+}
+
+type AuthResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Token         string                 `protobuf:"bytes,1,opt,name=token,proto3" json:"token,omitempty"`
+	UserId        string                 `protobuf:"bytes,2,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *AuthResponse) Reset() {
+	*x = AuthResponse{}
+	mi := &file_proto_taskhub_proto_msgTypes[5]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *AuthResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*AuthResponse) ProtoMessage() {}
+
+func (x *AuthResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_taskhub_proto_msgTypes[5]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use AuthResponse.ProtoReflect.Descriptor instead.
+func (*AuthResponse) Descriptor() ([]byte, []int) {
+	return file_proto_taskhub_proto_rawDescGZIP(), []int{5}
+}
+
+func (x *AuthResponse) GetToken() string {
+	if x != nil {
+		return x.Token
+	}
+	return ""
+}
+
+func (x *AuthResponse) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
 type CreateTaskRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Title         string                 `protobuf:"bytes,1,opt,name=title,proto3" json:"title,omitempty"`
@@ -188,7 +352,7 @@ type CreateTaskRequest struct {
 
 func (x *CreateTaskRequest) Reset() {
 	*x = CreateTaskRequest{}
-	mi := &file_proto_taskhub_proto_msgTypes[3]
+	mi := &file_proto_taskhub_proto_msgTypes[6]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -200,7 +364,7 @@ func (x *CreateTaskRequest) String() string {
 func (*CreateTaskRequest) ProtoMessage() {}
 
 func (x *CreateTaskRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_taskhub_proto_msgTypes[3]
+	mi := &file_proto_taskhub_proto_msgTypes[6]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -213,7 +377,7 @@ func (x *CreateTaskRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use CreateTaskRequest.ProtoReflect.Descriptor instead.
 func (*CreateTaskRequest) Descriptor() ([]byte, []int) {
-	return file_proto_taskhub_proto_rawDescGZIP(), []int{3}
+	return file_proto_taskhub_proto_rawDescGZIP(), []int{6}
 }
 
 func (x *CreateTaskRequest) GetTitle() string {
@@ -237,6 +401,74 @@ func (x *CreateTaskRequest) GetUserId() string {
 	return ""
 }
 
+type UpdateTaskRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	Title         string                 `protobuf:"bytes,2,opt,name=title,proto3" json:"title,omitempty"`
+	Description   string                 `protobuf:"bytes,3,opt,name=description,proto3" json:"description,omitempty"`
+	Completed     bool                   `protobuf:"varint,4,opt,name=completed,proto3" json:"completed,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *UpdateTaskRequest) Reset() {
+	*x = UpdateTaskRequest{}
+	mi := &file_proto_taskhub_proto_msgTypes[7]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *UpdateTaskRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*UpdateTaskRequest) ProtoMessage() {}
+
+func (x *UpdateTaskRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_taskhub_proto_msgTypes[7]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use UpdateTaskRequest.ProtoReflect.Descriptor instead.
+func (*UpdateTaskRequest) Descriptor() ([]byte, []int) {
+	return file_proto_taskhub_proto_rawDescGZIP(), []int{7}
+}
+
+func (x *UpdateTaskRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+func (x *UpdateTaskRequest) GetTitle() string {
+	if x != nil {
+		return x.Title
+	}
+	return ""
+}
+
+func (x *UpdateTaskRequest) GetDescription() string {
+	if x != nil {
+		return x.Description
+	}
+	return ""
+}
+
+func (x *UpdateTaskRequest) GetCompleted() bool {
+	if x != nil {
+		return x.Completed
+	}
+	return false
+}
+
 type GetTaskRequest struct {
 	state         protoimpl.MessageState `protogen:"open.v1"`
 	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
@@ -246,7 +478,7 @@ type GetTaskRequest struct {
 
 func (x *GetTaskRequest) Reset() {
 	*x = GetTaskRequest{}
-	mi := &file_proto_taskhub_proto_msgTypes[4]
+	mi := &file_proto_taskhub_proto_msgTypes[8]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -258,7 +490,7 @@ func (x *GetTaskRequest) String() string {
 func (*GetTaskRequest) ProtoMessage() {}
 
 func (x *GetTaskRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_taskhub_proto_msgTypes[4]
+	mi := &file_proto_taskhub_proto_msgTypes[8]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -271,7 +503,7 @@ func (x *GetTaskRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use GetTaskRequest.ProtoReflect.Descriptor instead.
 func (*GetTaskRequest) Descriptor() ([]byte, []int) {
-	return file_proto_taskhub_proto_rawDescGZIP(), []int{4}
+	return file_proto_taskhub_proto_rawDescGZIP(), []int{8}
 }
 
 func (x *GetTaskRequest) GetId() string {
@@ -295,7 +527,7 @@ type TaskResponse struct {
 
 func (x *TaskResponse) Reset() {
 	*x = TaskResponse{}
-	mi := &file_proto_taskhub_proto_msgTypes[5]
+	mi := &file_proto_taskhub_proto_msgTypes[9]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -307,7 +539,7 @@ func (x *TaskResponse) String() string {
 func (*TaskResponse) ProtoMessage() {}
 
 func (x *TaskResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_taskhub_proto_msgTypes[5]
+	mi := &file_proto_taskhub_proto_msgTypes[9]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -320,7 +552,7 @@ func (x *TaskResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use TaskResponse.ProtoReflect.Descriptor instead.
 func (*TaskResponse) Descriptor() ([]byte, []int) {
-	return file_proto_taskhub_proto_rawDescGZIP(), []int{5}
+	return file_proto_taskhub_proto_rawDescGZIP(), []int{9}
 }
 
 func (x *TaskResponse) GetId() string {
@@ -376,7 +608,7 @@ type ListTasksRequest struct {
 
 func (x *ListTasksRequest) Reset() {
 	*x = ListTasksRequest{}
-	mi := &file_proto_taskhub_proto_msgTypes[6]
+	mi := &file_proto_taskhub_proto_msgTypes[10]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -388,7 +620,7 @@ func (x *ListTasksRequest) String() string {
 func (*ListTasksRequest) ProtoMessage() {}
 
 func (x *ListTasksRequest) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_taskhub_proto_msgTypes[6]
+	mi := &file_proto_taskhub_proto_msgTypes[10]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -401,7 +633,7 @@ func (x *ListTasksRequest) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListTasksRequest.ProtoReflect.Descriptor instead.
 func (*ListTasksRequest) Descriptor() ([]byte, []int) {
-	return file_proto_taskhub_proto_rawDescGZIP(), []int{6}
+	return file_proto_taskhub_proto_rawDescGZIP(), []int{10}
 }
 
 func (x *ListTasksRequest) GetUserId() string {
@@ -435,7 +667,7 @@ type ListTasksResponse struct {
 
 func (x *ListTasksResponse) Reset() {
 	*x = ListTasksResponse{}
-	mi := &file_proto_taskhub_proto_msgTypes[7]
+	mi := &file_proto_taskhub_proto_msgTypes[11]
 	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 	ms.StoreMessageInfo(mi)
 }
@@ -447,7 +679,7 @@ func (x *ListTasksResponse) String() string {
 func (*ListTasksResponse) ProtoMessage() {}
 
 func (x *ListTasksResponse) ProtoReflect() protoreflect.Message {
-	mi := &file_proto_taskhub_proto_msgTypes[7]
+	mi := &file_proto_taskhub_proto_msgTypes[11]
 	if x != nil {
 		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
 		if ms.LoadMessageInfo() == nil {
@@ -460,7 +692,7 @@ func (x *ListTasksResponse) ProtoReflect() protoreflect.Message {
 
 // Deprecated: Use ListTasksResponse.ProtoReflect.Descriptor instead.
 func (*ListTasksResponse) Descriptor() ([]byte, []int) {
-	return file_proto_taskhub_proto_rawDescGZIP(), []int{7}
+	return file_proto_taskhub_proto_rawDescGZIP(), []int{11}
 }
 
 func (x *ListTasksResponse) GetTasks() []*TaskResponse {
@@ -477,6 +709,94 @@ func (x *ListTasksResponse) GetNextCursor() string {
 	return ""
 }
 
+type DeleteTaskRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Id            string                 `protobuf:"bytes,1,opt,name=id,proto3" json:"id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteTaskRequest) Reset() {
+	*x = DeleteTaskRequest{}
+	mi := &file_proto_taskhub_proto_msgTypes[12]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteTaskRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteTaskRequest) ProtoMessage() {}
+
+func (x *DeleteTaskRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_taskhub_proto_msgTypes[12]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteTaskRequest.ProtoReflect.Descriptor instead.
+func (*DeleteTaskRequest) Descriptor() ([]byte, []int) {
+	return file_proto_taskhub_proto_rawDescGZIP(), []int{12}
+}
+
+func (x *DeleteTaskRequest) GetId() string {
+	if x != nil {
+		return x.Id
+	}
+	return ""
+}
+
+type DeleteTaskResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Success       bool                   `protobuf:"varint,1,opt,name=success,proto3" json:"success,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *DeleteTaskResponse) Reset() {
+	*x = DeleteTaskResponse{}
+	mi := &file_proto_taskhub_proto_msgTypes[13]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *DeleteTaskResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*DeleteTaskResponse) ProtoMessage() {}
+
+func (x *DeleteTaskResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_taskhub_proto_msgTypes[13]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use DeleteTaskResponse.ProtoReflect.Descriptor instead.
+func (*DeleteTaskResponse) Descriptor() ([]byte, []int) {
+	return file_proto_taskhub_proto_rawDescGZIP(), []int{13}
+}
+
+func (x *DeleteTaskResponse) GetSuccess() bool {
+	if x != nil {
+		return x.Success
+	}
+	return false
+}
+
 var File_proto_taskhub_proto protoreflect.FileDescriptor
 
 const file_proto_taskhub_proto_rawDesc = "" +
@@ -490,11 +810,26 @@ const file_proto_taskhub_proto_rawDesc = "" +
 	"\fUserResponse\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\x12\x12\n" +
 	"\x04name\x18\x02 \x01(\tR\x04name\x12\x14\n" +
-	"\x05email\x18\x03 \x01(\tR\x05email\"d\n" +
+	"\x05email\x18\x03 \x01(\tR\x05email\"W\n" +
+	"\x0fRegisterRequest\x12\x12\n" +
+	"\x04name\x18\x01 \x01(\tR\x04name\x12\x14\n" +
+	"\x05email\x18\x02 \x01(\tR\x05email\x12\x1a\n" +
+	"\bpassword\x18\x03 \x01(\tR\bpassword\"@\n" +
+	"\fLoginRequest\x12\x14\n" +
+	"\x05email\x18\x01 \x01(\tR\x05email\x12\x1a\n" +
+	"\bpassword\x18\x02 \x01(\tR\bpassword\"=\n" +
+	"\fAuthResponse\x12\x14\n" +
+	"\x05token\x18\x01 \x01(\tR\x05token\x12\x17\n" +
+	"\auser_id\x18\x02 \x01(\tR\x06userId\"d\n" +
 	"\x11CreateTaskRequest\x12\x14\n" +
 	"\x05title\x18\x01 \x01(\tR\x05title\x12 \n" +
 	"\vdescription\x18\x02 \x01(\tR\vdescription\x12\x17\n" +
-	"\auser_id\x18\x03 \x01(\tR\x06userId\" \n" +
+	"\auser_id\x18\x03 \x01(\tR\x06userId\"y\n" +
+	"\x11UpdateTaskRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\x12\x14\n" +
+	"\x05title\x18\x02 \x01(\tR\x05title\x12 \n" +
+	"\vdescription\x18\x03 \x01(\tR\vdescription\x12\x1c\n" +
+	"\tcompleted\x18\x04 \x01(\bR\tcompleted\" \n" +
 	"\x0eGetTaskRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\"\xac\x01\n" +
 	"\fTaskResponse\x12\x0e\n" +
@@ -512,16 +847,27 @@ const file_proto_taskhub_proto_rawDesc = "" +
 	"\x11ListTasksResponse\x12+\n" +
 	"\x05tasks\x18\x01 \x03(\v2\x15.taskhub.TaskResponseR\x05tasks\x12\x1f\n" +
 	"\vnext_cursor\x18\x02 \x01(\tR\n" +
-	"nextCursor2\x89\x01\n" +
+	"nextCursor\"#\n" +
+	"\x11DeleteTaskRequest\x12\x0e\n" +
+	"\x02id\x18\x01 \x01(\tR\x02id\".\n" +
+	"\x12DeleteTaskResponse\x12\x18\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess2\x89\x01\n" +
 	"\vUserService\x12?\n" +
 	"\n" +
 	"CreateUser\x12\x1a.taskhub.CreateUserRequest\x1a\x15.taskhub.UserResponse\x129\n" +
-	"\aGetUser\x12\x17.taskhub.GetUserRequest\x1a\x15.taskhub.UserResponse2\xcd\x01\n" +
+	"\aGetUser\x12\x17.taskhub.GetUserRequest\x1a\x15.taskhub.UserResponse2\x81\x01\n" +
+	"\vAuthService\x12;\n" +
+	"\bRegister\x12\x18.taskhub.RegisterRequest\x1a\x15.taskhub.AuthResponse\x125\n" +
+	"\x05Login\x12\x15.taskhub.LoginRequest\x1a\x15.taskhub.AuthResponse2\xd5\x02\n" +
 	"\vTaskService\x12?\n" +
 	"\n" +
-	"CreateTask\x12\x1a.taskhub.CreateTaskRequest\x1a\x15.taskhub.TaskResponse\x129\n" +
+	"CreateTask\x12\x1a.taskhub.CreateTaskRequest\x1a\x15.taskhub.TaskResponse\x12?\n" +
+	"\n" +
+	"UpdateTask\x12\x1a.taskhub.UpdateTaskRequest\x1a\x15.taskhub.TaskResponse\x129\n" +
 	"\aGetTask\x12\x17.taskhub.GetTaskRequest\x1a\x15.taskhub.TaskResponse\x12B\n" +
-	"\tListTasks\x12\x19.taskhub.ListTasksRequest\x1a\x1a.taskhub.ListTasksResponseB$Z\"github.com/SimachewD/taskhub/protob\x06proto3"
+	"\tListTasks\x12\x19.taskhub.ListTasksRequest\x1a\x1a.taskhub.ListTasksResponse\x12E\n" +
+	"\n" +
+	"DeleteTask\x12\x1a.taskhub.DeleteTaskRequest\x1a\x1b.taskhub.DeleteTaskResponseB$Z\"github.com/SimachewD/taskhub/protob\x06proto3"
 
 var (
 	file_proto_taskhub_proto_rawDescOnce sync.Once
@@ -535,34 +881,48 @@ func file_proto_taskhub_proto_rawDescGZIP() []byte {
 	return file_proto_taskhub_proto_rawDescData
 }
 
-var file_proto_taskhub_proto_msgTypes = make([]protoimpl.MessageInfo, 8)
+var file_proto_taskhub_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
 var file_proto_taskhub_proto_goTypes = []any{
-	(*CreateUserRequest)(nil), // 0: taskhub.CreateUserRequest
-	(*GetUserRequest)(nil),    // 1: taskhub.GetUserRequest
-	(*UserResponse)(nil),      // 2: taskhub.UserResponse
-	(*CreateTaskRequest)(nil), // 3: taskhub.CreateTaskRequest
-	(*GetTaskRequest)(nil),    // 4: taskhub.GetTaskRequest
-	(*TaskResponse)(nil),      // 5: taskhub.TaskResponse
-	(*ListTasksRequest)(nil),  // 6: taskhub.ListTasksRequest
-	(*ListTasksResponse)(nil), // 7: taskhub.ListTasksResponse
+	(*CreateUserRequest)(nil),  // 0: taskhub.CreateUserRequest
+	(*GetUserRequest)(nil),     // 1: taskhub.GetUserRequest
+	(*UserResponse)(nil),       // 2: taskhub.UserResponse
+	(*RegisterRequest)(nil),    // 3: taskhub.RegisterRequest
+	(*LoginRequest)(nil),       // 4: taskhub.LoginRequest
+	(*AuthResponse)(nil),       // 5: taskhub.AuthResponse
+	(*CreateTaskRequest)(nil),  // 6: taskhub.CreateTaskRequest
+	(*UpdateTaskRequest)(nil),  // 7: taskhub.UpdateTaskRequest
+	(*GetTaskRequest)(nil),     // 8: taskhub.GetTaskRequest
+	(*TaskResponse)(nil),       // 9: taskhub.TaskResponse
+	(*ListTasksRequest)(nil),   // 10: taskhub.ListTasksRequest
+	(*ListTasksResponse)(nil),  // 11: taskhub.ListTasksResponse
+	(*DeleteTaskRequest)(nil),  // 12: taskhub.DeleteTaskRequest
+	(*DeleteTaskResponse)(nil), // 13: taskhub.DeleteTaskResponse
 }
 var file_proto_taskhub_proto_depIdxs = []int32{
-	5, // 0: taskhub.ListTasksResponse.tasks:type_name -> taskhub.TaskResponse
-	0, // 1: taskhub.UserService.CreateUser:input_type -> taskhub.CreateUserRequest
-	1, // 2: taskhub.UserService.GetUser:input_type -> taskhub.GetUserRequest
-	3, // 3: taskhub.TaskService.CreateTask:input_type -> taskhub.CreateTaskRequest
-	4, // 4: taskhub.TaskService.GetTask:input_type -> taskhub.GetTaskRequest
-	6, // 5: taskhub.TaskService.ListTasks:input_type -> taskhub.ListTasksRequest
-	2, // 6: taskhub.UserService.CreateUser:output_type -> taskhub.UserResponse
-	2, // 7: taskhub.UserService.GetUser:output_type -> taskhub.UserResponse
-	5, // 8: taskhub.TaskService.CreateTask:output_type -> taskhub.TaskResponse
-	5, // 9: taskhub.TaskService.GetTask:output_type -> taskhub.TaskResponse
-	7, // 10: taskhub.TaskService.ListTasks:output_type -> taskhub.ListTasksResponse
-	6, // [6:11] is the sub-list for method output_type
-	1, // [1:6] is the sub-list for method input_type
-	1, // [1:1] is the sub-list for extension type_name
-	1, // [1:1] is the sub-list for extension extendee
-	0, // [0:1] is the sub-list for field type_name
+	9,  // 0: taskhub.ListTasksResponse.tasks:type_name -> taskhub.TaskResponse
+	0,  // 1: taskhub.UserService.CreateUser:input_type -> taskhub.CreateUserRequest
+	1,  // 2: taskhub.UserService.GetUser:input_type -> taskhub.GetUserRequest
+	3,  // 3: taskhub.AuthService.Register:input_type -> taskhub.RegisterRequest
+	4,  // 4: taskhub.AuthService.Login:input_type -> taskhub.LoginRequest
+	6,  // 5: taskhub.TaskService.CreateTask:input_type -> taskhub.CreateTaskRequest
+	7,  // 6: taskhub.TaskService.UpdateTask:input_type -> taskhub.UpdateTaskRequest
+	8,  // 7: taskhub.TaskService.GetTask:input_type -> taskhub.GetTaskRequest
+	10, // 8: taskhub.TaskService.ListTasks:input_type -> taskhub.ListTasksRequest
+	12, // 9: taskhub.TaskService.DeleteTask:input_type -> taskhub.DeleteTaskRequest
+	2,  // 10: taskhub.UserService.CreateUser:output_type -> taskhub.UserResponse
+	2,  // 11: taskhub.UserService.GetUser:output_type -> taskhub.UserResponse
+	5,  // 12: taskhub.AuthService.Register:output_type -> taskhub.AuthResponse
+	5,  // 13: taskhub.AuthService.Login:output_type -> taskhub.AuthResponse
+	9,  // 14: taskhub.TaskService.CreateTask:output_type -> taskhub.TaskResponse
+	9,  // 15: taskhub.TaskService.UpdateTask:output_type -> taskhub.TaskResponse
+	9,  // 16: taskhub.TaskService.GetTask:output_type -> taskhub.TaskResponse
+	11, // 17: taskhub.TaskService.ListTasks:output_type -> taskhub.ListTasksResponse
+	13, // 18: taskhub.TaskService.DeleteTask:output_type -> taskhub.DeleteTaskResponse
+	10, // [10:19] is the sub-list for method output_type
+	1,  // [1:10] is the sub-list for method input_type
+	1,  // [1:1] is the sub-list for extension type_name
+	1,  // [1:1] is the sub-list for extension extendee
+	0,  // [0:1] is the sub-list for field type_name
 }
 
 func init() { file_proto_taskhub_proto_init() }
@@ -576,9 +936,9 @@ func file_proto_taskhub_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_taskhub_proto_rawDesc), len(file_proto_taskhub_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   8,
+			NumMessages:   14,
 			NumExtensions: 0,
-			NumServices:   2,
+			NumServices:   3,
 		},
 		GoTypes:           file_proto_taskhub_proto_goTypes,
 		DependencyIndexes: file_proto_taskhub_proto_depIdxs,

@@ -44,11 +44,58 @@ func (r *TaskRepository) CreateTask(ctx context.Context, req *pb.CreateTaskReque
 		Description: req.Description,
 		UserId:      req.UserId,
 		Completed:   false,
+		CreatedAt: time.Now().UTC().Format(time.RFC3339),
 	}
 
 	// cache task
 	data, _ := json.Marshal(task)
 	_ = r.redis.Set(ctx, "task:"+id, data, 5*time.Minute)
+
+	return task, nil
+}
+
+func (r *TaskRepository) UpdateTask(ctx context.Context, req *pb.UpdateTaskRequest) (*pb.TaskResponse, error) {
+
+	// Update Postgres
+	_, err := r.db.Exec(ctx,
+		`UPDATE tasks SET title=$1, description=$2, completed=$3
+		 WHERE id=$4`,
+		req.Title,
+		req.Description,
+		req.Completed,
+		req.Id,
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	var createdAt time.Time // temporary variable for DB timestamp
+
+	// Fetch updated task
+	task := &pb.TaskResponse{}
+	err = r.db.QueryRow(ctx,
+		`SELECT id,title,description,user_id,completed,created_at
+		 FROM tasks WHERE id=$1`, req.Id,
+	).Scan(
+		&task.Id,
+		&task.Title,
+		&task.Description,
+		&task.UserId,
+		&task.Completed,
+		&createdAt, // scan timestamp here
+	)
+	if err != nil {
+		return nil, err
+	}
+
+	// convert time.Time to string
+    task.CreatedAt = createdAt.Format(time.RFC3339)
+
+	// Update Redis cache
+	if r.redis != nil {
+		data, _ := json.Marshal(task)
+		_ = r.redis.Set(ctx, "task:"+req.Id, data, 5*time.Minute)
+	}
 
 	return task, nil
 }
@@ -101,13 +148,6 @@ func (r *TaskRepository) ListTasks(
 	cursor string,
 ) ([]*pb.TaskResponse, string, error) {
 
-	if cursor == "" {
-		cursor = "infinity" //default pointer
-	}
-	if limit <= 0 {
-		limit = 20 // default page size
-	}
-
 	query := `
 	SELECT id, title, description, user_id, completed, created_at
 	FROM tasks
@@ -155,4 +195,28 @@ func (r *TaskRepository) ListTasks(
 	}
 
 	return tasks, lastCursor, nil
+}
+
+func (r *TaskRepository) DeleteTask(ctx context.Context, id string) error {
+
+	_, err := r.db.Exec(ctx,
+		`DELETE FROM tasks WHERE id=$1`,
+		id,
+	)
+
+	if err != nil {
+		return err
+	}
+
+	// remove cache
+	if r.redis != nil {
+		r.redis.Delete(ctx, "task:"+id)
+	}
+
+	// push job to worker queue
+	if r.redis != nil {
+		r.redis.Enqueue(ctx, "task_deleted", id)
+	}
+
+	return nil
 }
