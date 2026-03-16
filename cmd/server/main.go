@@ -42,5 +42,5 @@ func main() {
 
 	go worker.Start(ctx)
 
-	grpc.StartServer(":50051", userRepo, taskRepo)
+	grpc.StartServer(":50051", userRepo, taskRepo, redisClient)
 }

@@ -3,12 +3,14 @@ package repository
 import (
 	"context"
 	"encoding/json"
+	"errors"
 	"fmt"
 	"time"
 
 	"github.com/SimachewD/taskhub/internal/cache"
 	pb "github.com/SimachewD/taskhub/proto"
 	"github.com/google/uuid"
+	"github.com/jackc/pgx/v5"
 	"github.com/jackc/pgx/v5/pgxpool"
 )
 
@@ -50,6 +52,8 @@ func (r *TaskRepository) CreateTask(ctx context.Context, req *pb.CreateTaskReque
 	// cache task
 	data, _ := json.Marshal(task)
 	_ = r.redis.Set(ctx, "task:"+id, data, 5*time.Minute)
+
+	r.notifyTaskChange("created", task)
 
 	return task, nil
 }
@@ -96,6 +100,8 @@ func (r *TaskRepository) UpdateTask(ctx context.Context, req *pb.UpdateTaskReque
 		data, _ := json.Marshal(task)
 		_ = r.redis.Set(ctx, "task:"+req.Id, data, 5*time.Minute)
 	}
+
+	r.notifyTaskChange("updated", task)
 
 	return task, nil
 }
@@ -199,12 +205,26 @@ func (r *TaskRepository) ListTasks(
 
 func (r *TaskRepository) DeleteTask(ctx context.Context, id string) error {
 
-	_, err := r.db.Exec(ctx,
-		`DELETE FROM tasks WHERE id=$1`,
+	var task pb.TaskResponse
+
+	err := r.db.QueryRow(ctx,
+		`DELETE FROM tasks
+		 WHERE id=$1
+		 RETURNING id, title, description, user_id, completed, created_at`,
 		id,
+	).Scan(
+		&task.Id,
+		&task.Title,
+		&task.Description,
+		&task.UserId,
+		&task.Completed,
+		&task.CreatedAt,
 	)
 
 	if err != nil {
+		if errors.Is(err, pgx.ErrNoRows) {
+			return errors.New("task not found")
+		}
 		return err
 	}
 
@@ -218,5 +238,22 @@ func (r *TaskRepository) DeleteTask(ctx context.Context, id string) error {
 		r.redis.Enqueue(ctx, "task_deleted", id)
 	}
 
+	r.notifyTaskChange("deleted", &task)
+
 	return nil
+}
+
+func (r *TaskRepository) notifyTaskChange(event string, task *pb.TaskResponse) {
+	if r.redis == nil {
+		return
+	}
+	payload := struct {
+		Event string           `json:"event"`
+		Task  *pb.TaskResponse `json:"task"`
+	}{
+		Event: event,
+		Task:  task,
+	}
+	data, _ := json.Marshal(payload)
+	r.redis.Publish("tasks_channel:"+task.UserId, string(data))
 }

@@ -4,6 +4,7 @@ import (
 	"log"
 	"net"
 
+	"github.com/SimachewD/taskhub/internal/cache"
 	"github.com/SimachewD/taskhub/internal/middleware"
 	"github.com/SimachewD/taskhub/internal/repository"
 	"github.com/SimachewD/taskhub/internal/service"
@@ -11,7 +12,7 @@ import (
 	"google.golang.org/grpc"
 )
 
-func StartServer(port string, userRepo *repository.UserRepository, taskRepo *repository.TaskRepository) {
+func StartServer(port string, userRepo *repository.UserRepository, taskRepo *repository.TaskRepository, redis *cache.RedisClient) {
 	lis, err := net.Listen("tcp", port)
 	if err != nil {
 		log.Fatalf("failed to listen: %v", err)
@@ -21,11 +22,13 @@ func StartServer(port string, userRepo *repository.UserRepository, taskRepo *rep
 	userService := service.NewUserService(userRepo)
 	taskService := service.NewTaskService(taskRepo)
 	authService := service.NewAuthService(userRepo)
+	notificationService := service.NewNotificationServer(redis)
 
 	// Register services
 	pb.RegisterUserServiceServer(server, userService)
 	pb.RegisterTaskServiceServer(server, taskService)
 	pb.RegisterAuthServiceServer(server, authService)
+	pb.RegisterNotificationServiceServer(server, notificationService)
 
 	log.Printf("gRPC server running on %s", port)
 	if err := server.Serve(lis); err != nil {

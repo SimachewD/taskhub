@@ -112,3 +112,17 @@ message DeleteTaskRequest {
 message DeleteTaskResponse {
   bool success = 1;
 }
+
+service NotificationService {
+  rpc SubscribeTasks(SubscribeTasksRequest) 
+      returns (stream NotificationResponse);
+}
+
+message SubscribeTasksRequest {
+  string user_id = 1;
+}
+
+message NotificationResponse {
+    string event = 1;
+    TaskResponse task = 2;
+}

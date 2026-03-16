@@ -797,6 +797,102 @@ func (x *DeleteTaskResponse) GetSuccess() bool {
 	return false
 }
 
+type SubscribeTasksRequest struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	UserId        string                 `protobuf:"bytes,1,opt,name=user_id,json=userId,proto3" json:"user_id,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *SubscribeTasksRequest) Reset() {
+	*x = SubscribeTasksRequest{}
+	mi := &file_proto_taskhub_proto_msgTypes[14]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *SubscribeTasksRequest) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*SubscribeTasksRequest) ProtoMessage() {}
+
+func (x *SubscribeTasksRequest) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_taskhub_proto_msgTypes[14]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use SubscribeTasksRequest.ProtoReflect.Descriptor instead.
+func (*SubscribeTasksRequest) Descriptor() ([]byte, []int) {
+	return file_proto_taskhub_proto_rawDescGZIP(), []int{14}
+}
+
+func (x *SubscribeTasksRequest) GetUserId() string {
+	if x != nil {
+		return x.UserId
+	}
+	return ""
+}
+
+type NotificationResponse struct {
+	state         protoimpl.MessageState `protogen:"open.v1"`
+	Event         string                 `protobuf:"bytes,1,opt,name=event,proto3" json:"event,omitempty"`
+	Task          *TaskResponse          `protobuf:"bytes,2,opt,name=task,proto3" json:"task,omitempty"`
+	unknownFields protoimpl.UnknownFields
+	sizeCache     protoimpl.SizeCache
+}
+
+func (x *NotificationResponse) Reset() {
+	*x = NotificationResponse{}
+	mi := &file_proto_taskhub_proto_msgTypes[15]
+	ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+	ms.StoreMessageInfo(mi)
+}
+
+func (x *NotificationResponse) String() string {
+	return protoimpl.X.MessageStringOf(x)
+}
+
+func (*NotificationResponse) ProtoMessage() {}
+
+func (x *NotificationResponse) ProtoReflect() protoreflect.Message {
+	mi := &file_proto_taskhub_proto_msgTypes[15]
+	if x != nil {
+		ms := protoimpl.X.MessageStateOf(protoimpl.Pointer(x))
+		if ms.LoadMessageInfo() == nil {
+			ms.StoreMessageInfo(mi)
+		}
+		return ms
+	}
+	return mi.MessageOf(x)
+}
+
+// Deprecated: Use NotificationResponse.ProtoReflect.Descriptor instead.
+func (*NotificationResponse) Descriptor() ([]byte, []int) {
+	return file_proto_taskhub_proto_rawDescGZIP(), []int{15}
+}
+
+func (x *NotificationResponse) GetEvent() string {
+	if x != nil {
+		return x.Event
+	}
+	return ""
+}
+
+func (x *NotificationResponse) GetTask() *TaskResponse {
+	if x != nil {
+		return x.Task
+	}
+	return nil
+}
+
 var File_proto_taskhub_proto protoreflect.FileDescriptor
 
 const file_proto_taskhub_proto_rawDesc = "" +
@@ -851,7 +947,12 @@ const file_proto_taskhub_proto_rawDesc = "" +
 	"\x11DeleteTaskRequest\x12\x0e\n" +
 	"\x02id\x18\x01 \x01(\tR\x02id\".\n" +
 	"\x12DeleteTaskResponse\x12\x18\n" +
-	"\asuccess\x18\x01 \x01(\bR\asuccess2\x89\x01\n" +
+	"\asuccess\x18\x01 \x01(\bR\asuccess\"0\n" +
+	"\x15SubscribeTasksRequest\x12\x17\n" +
+	"\auser_id\x18\x01 \x01(\tR\x06userId\"W\n" +
+	"\x14NotificationResponse\x12\x14\n" +
+	"\x05event\x18\x01 \x01(\tR\x05event\x12)\n" +
+	"\x04task\x18\x02 \x01(\v2\x15.taskhub.TaskResponseR\x04task2\x89\x01\n" +
 	"\vUserService\x12?\n" +
 	"\n" +
 	"CreateUser\x12\x1a.taskhub.CreateUserRequest\x1a\x15.taskhub.UserResponse\x129\n" +
@@ -867,7 +968,9 @@ const file_proto_taskhub_proto_rawDesc = "" +
 	"\aGetTask\x12\x17.taskhub.GetTaskRequest\x1a\x15.taskhub.TaskResponse\x12B\n" +
 	"\tListTasks\x12\x19.taskhub.ListTasksRequest\x1a\x1a.taskhub.ListTasksResponse\x12E\n" +
 	"\n" +
-	"DeleteTask\x12\x1a.taskhub.DeleteTaskRequest\x1a\x1b.taskhub.DeleteTaskResponseB$Z\"github.com/SimachewD/taskhub/protob\x06proto3"
+	"DeleteTask\x12\x1a.taskhub.DeleteTaskRequest\x1a\x1b.taskhub.DeleteTaskResponse2h\n" +
+	"\x13NotificationService\x12Q\n" +
+	"\x0eSubscribeTasks\x12\x1e.taskhub.SubscribeTasksRequest\x1a\x1d.taskhub.NotificationResponse0\x01B$Z\"github.com/SimachewD/taskhub/protob\x06proto3"
 
 var (
 	file_proto_taskhub_proto_rawDescOnce sync.Once
@@ -881,48 +984,53 @@ func file_proto_taskhub_proto_rawDescGZIP() []byte {
 	return file_proto_taskhub_proto_rawDescData
 }
 
-var file_proto_taskhub_proto_msgTypes = make([]protoimpl.MessageInfo, 14)
+var file_proto_taskhub_proto_msgTypes = make([]protoimpl.MessageInfo, 16)
 var file_proto_taskhub_proto_goTypes = []any{
-	(*CreateUserRequest)(nil),  // 0: taskhub.CreateUserRequest
-	(*GetUserRequest)(nil),     // 1: taskhub.GetUserRequest
-	(*UserResponse)(nil),       // 2: taskhub.UserResponse
-	(*RegisterRequest)(nil),    // 3: taskhub.RegisterRequest
-	(*LoginRequest)(nil),       // 4: taskhub.LoginRequest
-	(*AuthResponse)(nil),       // 5: taskhub.AuthResponse
-	(*CreateTaskRequest)(nil),  // 6: taskhub.CreateTaskRequest
-	(*UpdateTaskRequest)(nil),  // 7: taskhub.UpdateTaskRequest
-	(*GetTaskRequest)(nil),     // 8: taskhub.GetTaskRequest
-	(*TaskResponse)(nil),       // 9: taskhub.TaskResponse
-	(*ListTasksRequest)(nil),   // 10: taskhub.ListTasksRequest
-	(*ListTasksResponse)(nil),  // 11: taskhub.ListTasksResponse
-	(*DeleteTaskRequest)(nil),  // 12: taskhub.DeleteTaskRequest
-	(*DeleteTaskResponse)(nil), // 13: taskhub.DeleteTaskResponse
+	(*CreateUserRequest)(nil),     // 0: taskhub.CreateUserRequest
+	(*GetUserRequest)(nil),        // 1: taskhub.GetUserRequest
+	(*UserResponse)(nil),          // 2: taskhub.UserResponse
+	(*RegisterRequest)(nil),       // 3: taskhub.RegisterRequest
+	(*LoginRequest)(nil),          // 4: taskhub.LoginRequest
+	(*AuthResponse)(nil),          // 5: taskhub.AuthResponse
+	(*CreateTaskRequest)(nil),     // 6: taskhub.CreateTaskRequest
+	(*UpdateTaskRequest)(nil),     // 7: taskhub.UpdateTaskRequest
+	(*GetTaskRequest)(nil),        // 8: taskhub.GetTaskRequest
+	(*TaskResponse)(nil),          // 9: taskhub.TaskResponse
+	(*ListTasksRequest)(nil),      // 10: taskhub.ListTasksRequest
+	(*ListTasksResponse)(nil),     // 11: taskhub.ListTasksResponse
+	(*DeleteTaskRequest)(nil),     // 12: taskhub.DeleteTaskRequest
+	(*DeleteTaskResponse)(nil),    // 13: taskhub.DeleteTaskResponse
+	(*SubscribeTasksRequest)(nil), // 14: taskhub.SubscribeTasksRequest
+	(*NotificationResponse)(nil),  // 15: taskhub.NotificationResponse
 }
 var file_proto_taskhub_proto_depIdxs = []int32{
 	9,  // 0: taskhub.ListTasksResponse.tasks:type_name -> taskhub.TaskResponse
-	0,  // 1: taskhub.UserService.CreateUser:input_type -> taskhub.CreateUserRequest
-	1,  // 2: taskhub.UserService.GetUser:input_type -> taskhub.GetUserRequest
-	3,  // 3: taskhub.AuthService.Register:input_type -> taskhub.RegisterRequest
-	4,  // 4: taskhub.AuthService.Login:input_type -> taskhub.LoginRequest
-	6,  // 5: taskhub.TaskService.CreateTask:input_type -> taskhub.CreateTaskRequest
-	7,  // 6: taskhub.TaskService.UpdateTask:input_type -> taskhub.UpdateTaskRequest
-	8,  // 7: taskhub.TaskService.GetTask:input_type -> taskhub.GetTaskRequest
-	10, // 8: taskhub.TaskService.ListTasks:input_type -> taskhub.ListTasksRequest
-	12, // 9: taskhub.TaskService.DeleteTask:input_type -> taskhub.DeleteTaskRequest
-	2,  // 10: taskhub.UserService.CreateUser:output_type -> taskhub.UserResponse
-	2,  // 11: taskhub.UserService.GetUser:output_type -> taskhub.UserResponse
-	5,  // 12: taskhub.AuthService.Register:output_type -> taskhub.AuthResponse
-	5,  // 13: taskhub.AuthService.Login:output_type -> taskhub.AuthResponse
-	9,  // 14: taskhub.TaskService.CreateTask:output_type -> taskhub.TaskResponse
-	9,  // 15: taskhub.TaskService.UpdateTask:output_type -> taskhub.TaskResponse
-	9,  // 16: taskhub.TaskService.GetTask:output_type -> taskhub.TaskResponse
-	11, // 17: taskhub.TaskService.ListTasks:output_type -> taskhub.ListTasksResponse
-	13, // 18: taskhub.TaskService.DeleteTask:output_type -> taskhub.DeleteTaskResponse
-	10, // [10:19] is the sub-list for method output_type
-	1,  // [1:10] is the sub-list for method input_type
-	1,  // [1:1] is the sub-list for extension type_name
-	1,  // [1:1] is the sub-list for extension extendee
-	0,  // [0:1] is the sub-list for field type_name
+	9,  // 1: taskhub.NotificationResponse.task:type_name -> taskhub.TaskResponse
+	0,  // 2: taskhub.UserService.CreateUser:input_type -> taskhub.CreateUserRequest
+	1,  // 3: taskhub.UserService.GetUser:input_type -> taskhub.GetUserRequest
+	3,  // 4: taskhub.AuthService.Register:input_type -> taskhub.RegisterRequest
+	4,  // 5: taskhub.AuthService.Login:input_type -> taskhub.LoginRequest
+	6,  // 6: taskhub.TaskService.CreateTask:input_type -> taskhub.CreateTaskRequest
+	7,  // 7: taskhub.TaskService.UpdateTask:input_type -> taskhub.UpdateTaskRequest
+	8,  // 8: taskhub.TaskService.GetTask:input_type -> taskhub.GetTaskRequest
+	10, // 9: taskhub.TaskService.ListTasks:input_type -> taskhub.ListTasksRequest
+	12, // 10: taskhub.TaskService.DeleteTask:input_type -> taskhub.DeleteTaskRequest
+	14, // 11: taskhub.NotificationService.SubscribeTasks:input_type -> taskhub.SubscribeTasksRequest
+	2,  // 12: taskhub.UserService.CreateUser:output_type -> taskhub.UserResponse
+	2,  // 13: taskhub.UserService.GetUser:output_type -> taskhub.UserResponse
+	5,  // 14: taskhub.AuthService.Register:output_type -> taskhub.AuthResponse
+	5,  // 15: taskhub.AuthService.Login:output_type -> taskhub.AuthResponse
+	9,  // 16: taskhub.TaskService.CreateTask:output_type -> taskhub.TaskResponse
+	9,  // 17: taskhub.TaskService.UpdateTask:output_type -> taskhub.TaskResponse
+	9,  // 18: taskhub.TaskService.GetTask:output_type -> taskhub.TaskResponse
+	11, // 19: taskhub.TaskService.ListTasks:output_type -> taskhub.ListTasksResponse
+	13, // 20: taskhub.TaskService.DeleteTask:output_type -> taskhub.DeleteTaskResponse
+	15, // 21: taskhub.NotificationService.SubscribeTasks:output_type -> taskhub.NotificationResponse
+	12, // [12:22] is the sub-list for method output_type
+	2,  // [2:12] is the sub-list for method input_type
+	2,  // [2:2] is the sub-list for extension type_name
+	2,  // [2:2] is the sub-list for extension extendee
+	0,  // [0:2] is the sub-list for field type_name
 }
 
 func init() { file_proto_taskhub_proto_init() }
@@ -936,9 +1044,9 @@ func file_proto_taskhub_proto_init() {
 			GoPackagePath: reflect.TypeOf(x{}).PkgPath(),
 			RawDescriptor: unsafe.Slice(unsafe.StringData(file_proto_taskhub_proto_rawDesc), len(file_proto_taskhub_proto_rawDesc)),
 			NumEnums:      0,
-			NumMessages:   14,
+			NumMessages:   16,
 			NumExtensions: 0,
-			NumServices:   3,
+			NumServices:   4,
 		},
 		GoTypes:           file_proto_taskhub_proto_goTypes,
 		DependencyIndexes: file_proto_taskhub_proto_depIdxs,
